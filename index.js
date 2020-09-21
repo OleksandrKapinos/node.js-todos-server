@@ -2,13 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const dbConfig = require('./config');
 const bodyParser = require('body-parser');
-const todosRouter = require('./routes/todosRouter');
-const commonRouter = require('./routes/commonRouter');
+const api = require('./routes/index');
 
 const port = 3000;
 const app = express();
 const db = mongoose.connection;
-
 
 mongoose.connect(dbConfig.getUrl(),
     {
@@ -21,17 +19,10 @@ db.once('open', function () {
     console.log('connected')
 });
 
-
 app.use(bodyParser.json());
-app.use("/todos/:id", function(request, response, next){
-    console.log("Only for todos with id");
-    next();
-});
-app.use(todosRouter);
-app.use(commonRouter);
-
+app.use(bodyParser.urlencoded({extended: false}));
+app.use('/api', api);
 
 app.listen(port);
-
 
 module.exports.app = app;

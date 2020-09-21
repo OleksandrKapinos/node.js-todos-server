@@ -1,9 +1,6 @@
-const TodoValidate = require('../validators/todoValidate');
-
-
-const middleware = (property) => {
+const middleware = (property, Schema) => {
     return (req, res, next) => {
-        const { error } = TodoValidate.validate(req[property]);
+        const { error } = Schema.validate(req[property]);
         const valid = error == null;
         if (valid) { next(); }
         else {
