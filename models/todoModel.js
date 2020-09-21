@@ -4,6 +4,6 @@ const todoSchema = new mongoose.Schema({
     name: String,
     description: String,
     marked: { type: Boolean, default: false}
-});
+},{ versionKey: false });
 
 module.exports = mongoose.model('Todo', todoSchema);
